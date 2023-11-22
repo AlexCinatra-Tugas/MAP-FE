@@ -12,17 +12,19 @@ const MissionEventComp = () => {
         <TbPlaneInflight />
         <span className='font-semibold'>Tambah Misi</span>
       </button>
-      <div className='w-full flex flex-col items-center justify-center md:overflow-y-scroll h-[400px]'>
-        <MissionComp name={"Misi 1"} />
-        <MissionComp name={"Misi 2"} />
-        <MissionComp name={"Misi 3"} />
-        <MissionComp name={"Misi 4"} />
-        {/* <MissionComp name={"Misi 5"} />
-        <MissionComp name={"Misi 6"} />
-        <MissionComp name={"Misi 7"} />
-        <MissionComp name={"Misi 8"} />
-        <MissionComp name={"Misi 9"} />
-        <MissionComp name={"Misi 10"} /> */}
+      <div className='w-full md:overflow-y-scroll h-[400px]'>
+        <div className='flex flex-col items-center justify-center'>
+          <MissionComp name={"Misi 1"} />
+          <MissionComp name={"Misi 2"} />
+          <MissionComp name={"Misi 3"} />
+          <MissionComp name={"Misi 4"} />
+          <MissionComp name={"Misi 5"} />
+          <MissionComp name={"Misi 6"} />
+          <MissionComp name={"Misi 7"} />
+          <MissionComp name={"Misi 8"} />
+          <MissionComp name={"Misi 9"} />
+          <MissionComp name={"Misi 10"} />
+        </div>
       </div>
     </div>
   );
