@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
-    <div className='bg-[#000011] text-white'>
+    <div className='bg-[#000011] text-white overflow-auto'>
       <HomePage />
     </div>
   );
