@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 
@@ -13,8 +14,12 @@ const MissionComp = (props) => {
       }}>
       <p>{props.name}</p>
       <div className='flex items-center space-x-5'>
-        <AiTwotoneEdit />
-        <MdDeleteOutline />
+        <Link to={`/mission`}>
+          <AiTwotoneEdit />
+        </Link>
+        <Link>
+          <MdDeleteOutline />
+        </Link>
       </div>
     </div>
   );

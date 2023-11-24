@@ -11,38 +11,14 @@ const MapComp = () => {
   const initialPos = [-7.772297405953391, 110.37734234583341];
   // const initialPos = [-85.058981, 32.13674];
 
-  const data = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        id: "09213",
-        properties: { name: "a", density: 94.65 },
-        geometry: {
-          type: "Polygon",
-          coordinates: [
-            [
-              [-7.771322923340632, 110.37719107913776],
-              [-7.772226497749426, 110.37588148399519],
-              [-7.772779271723014, 110.37755604827585],
-            ],
-          ],
-        },
-      },
-    ],
-  };
-
   const onCreate = (e) => {
-    const { layer, layerType } = e;
-    const coordinates = layer._latlngs;
-    const type = layerType;
-    console.log(type);
+    const { layer } = e;
+    const coordinates = layer.toGeoJSON();
     console.log(coordinates);
   };
 
   return (
-    // edit width di sini
-    <div className='h-full w-full rounded-lg p-1 overflow-hidden border-[5px] bg-white'>
+    <div className='h-full w-full rounded-lg overflow-hidden border-[5px] bg-white'>
       <MapContainer
         center={initialPos}
         zoom={20}
@@ -62,7 +38,6 @@ const MapComp = () => {
               circlemarker: false,
             }}
           />
-          <GeoJSON data={data} />
         </FeatureGroup>
       </MapContainer>
     </div>

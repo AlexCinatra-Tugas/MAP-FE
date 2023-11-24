@@ -1,6 +1,7 @@
 import React from "react";
+import MissionPage from "./MissionPage";
 const TestingPage = () => {
-  return <div>Testing Page</div>;
+  return <div>testing page</div>;
 };
 
 export default TestingPage;
