@@ -4,20 +4,28 @@ import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import data from "../data/data.json";
+import axios from "axios";
+import useSWR from "swr";
 
 const MissionPage = () => {
   const mapRef = useRef();
   const initialPos = [-7.770318, 110.377788];
 
-  const onCreate = (e) => {
-    const { layer } = e;
-    const coordinates = layer.toGeoJSON();
-    console.log(coordinates);
-  };
+  // const fetcher = async () => {
+  //   const response = await axios.get("http://localhost:9000/api/mission");
+  //   return response.data;
+  // };
+
+  // const { data } = useSWR("mission", fetcher);
+  // if (!data) {
+  //   () => {
+  //     console.log("load");
+  //   };
+  // }
 
   return (
     <div className='flex w-full h-screen'>
-      <div className='p-5 w-1/4'>
+      {/* <div className='p-5 w-1/4'>
         <div>
           <div htmlFor='#' className='text-[15px] py-1 font-semibold'>
             Mission's Name
@@ -29,8 +37,8 @@ const MissionPage = () => {
             Submit
           </button>
         </div>
-      </div>
-      <div className='p-5 w-3/4'>
+      </div> */}
+      <div className='p-5 w-4/5'>
         <div className='h-full w-full rounded-lg p-1 overflow-hidden border-[5px] bg-white'>
           <MapContainer
             center={initialPos}
@@ -44,14 +52,13 @@ const MissionPage = () => {
             <FeatureGroup>
               <EditControl
                 position='topright'
-                onCreated={onCreate}
                 draw={{
                   rectangle: false,
                   circle: false,
                   circlemarker: false,
                 }}
               />
-              {/* <GeoJSON data={data} /> */}
+              <GeoJSON data={data} />
             </FeatureGroup>
           </MapContainer>
         </div>

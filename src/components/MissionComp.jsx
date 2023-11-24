@@ -14,7 +14,7 @@ const MissionComp = (props) => {
       }}>
       <p>{props.name}</p>
       <div className='flex items-center space-x-5'>
-        <Link to={`/mission`}>
+        <Link to={`/`}>
           <AiTwotoneEdit />
         </Link>
         <Link>
