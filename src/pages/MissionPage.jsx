@@ -39,16 +39,21 @@ const MissionPage = () => {
       <section className='flex items-center justify-center h-full py-5'>
         <form className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
           <div
-            to={"/"}
             className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
-            Add the New Data
+            Update Mission
           </div>
           <div className='w-full flex items-center justify-center py-5'>
-            <input
-              type='text'
-              className='px-2 py-3 w-full rounded-md text-black'
-              placeholder='Input Mission Name'
-            />
+              {data.map((items) => {
+                return (
+                  <>
+                  <div
+                  className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
+                  key={items.id}>
+                    <p>MISI : {items.data.properties.name}</p>
+                  </div>
+                  </>
+                );
+              })}
           </div>
           <div className='flex flex-col items-center justify-center w-full hover:translate-y-[-1px]'>
             <button className='px-2 py-3 w-full rounded-md bg-yellow-300 font-semibold'>
@@ -76,6 +81,9 @@ const MissionPage = () => {
                 position='topright'
                 onCreated={onCreate}
                 draw={{
+                  polyline : false,
+                  polygon : false,
+                  marker : false,
                   rectangle: false,
                   circle: false,
                   circlemarker: false,

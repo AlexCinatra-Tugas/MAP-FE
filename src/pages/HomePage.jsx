@@ -73,11 +73,7 @@ const HomePage = () => {
               <EditControl
                 position='topright'
                 onCreated={onCreate}
-                draw={{
-                  rectangle: false,
-                  circle: false,
-                  circlemarker: false,
-                }}
+                
               />
               {data.map((items) => {
                 return (
