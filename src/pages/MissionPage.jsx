@@ -11,7 +11,7 @@ import { AiTwotoneEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const MissionPage = () => {
+const HomePage = () => {
   const mapRef = useRef();
   // const initialPos = [-7.772297405953391, 110.37734234583341];
   const initialPos = [-7.971605, 110.276907];
@@ -95,39 +95,32 @@ const MissionPage = () => {
       {/* start mission event section */}
       <section className='flex items-center justify-center md:h-[400px]'>
         <div className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
-          <div
-            to={"/"}
-            className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
-            Mission Side
-          </div>
           <div className='w-full flex items-center justify-center py-5'>
-            <Link
+            <div
               to={"./add"}
-              className='px-4 py-3 flex items-center space-x-2 border rounded-md w-[200px]'>
+              className='px-4 py-3 flex justify-items-center space-x-2 border rounded-md w-[200px]'>
               <TbPlaneInflight />
-              <span className='font-semibold'>Tambah Misi</span>
-            </Link>
+              <span className='font-semibold text-center'>EDIT</span>
+            </div>
           </div>
-          <div className='overflow-y-scroll'>
+          <div>
             <div className='flex flex-col items-center justify-center pr-5'>
               {data.map((items) => {
+                const id = 4;
                 return (
-                  <Link
-                    to={`./edit/${items.id}`}
-                    className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
-                    key={items.id}>
+                  <>
+                  <div
+                  className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
+                  key={items.id}>
                     <p>{items.data.properties.name}</p>
-                    <div className='flex items-center space-x-5'>
-                      <button>
-                        <AiTwotoneEdit />
-                      </button>
-                      <button onClick={() => deleteMission(Number(items.id))}>
-                        <MdDeleteOutline />
-                      </button>
-                    </div>
-                  </Link>
+                  </div>
+                  <div className='flex text-center items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-20 hover:translate-y-[-1px]'>
+                    <p>SAVE</p>
+                  </div>
+                  </>
                 );
               })}
+
             </div>
           </div>
         </div>
@@ -137,4 +130,4 @@ const MissionPage = () => {
   );
 };
 
-export default MissionPage;
+export default HomePage;

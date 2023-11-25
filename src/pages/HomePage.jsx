@@ -112,20 +112,20 @@ const HomePage = () => {
             <div className='flex flex-col items-center justify-center pr-5'>
               {data.map((items) => {
                 return (
-                  <Link
-                    to={`./edit/${items.id}`}
-                    className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
-                    key={items.id}>
+                  <div
+                  className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
+                  key={items.id}>
                     <p>{items.data.properties.name}</p>
                     <div className='flex items-center space-x-5'>
-                      <button>
+                      <Link
+                      to={`./edit/${items.id}`}>
                         <AiTwotoneEdit />
-                      </button>
+                      </Link>
                       <button onClick={() => deleteMission(Number(items.id))}>
                         <MdDeleteOutline />
                       </button>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
             </div>
