@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import AddPage from "./pages/AddPage";
+import MissionPage from "./pages/MissionPage";
 
 const App = () => {
   return (
@@ -8,8 +10,11 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' Component={HomePage} />
+          <Route path='/add' Component={AddPage} />
+          <Route path='/edit' Component={MissionPage} />
         </Routes>
       </BrowserRouter>
+      <HomePage />
     </div>
   );
 };

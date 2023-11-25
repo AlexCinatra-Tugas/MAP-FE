@@ -1,20 +1,22 @@
 import axios from "axios";
 import useSWR, { mutate, useSWRConfig } from "swr";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { TileLayer, FeatureGroup, MapContainer, GeoJSON } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import GamaForceLogo from "../assets/logo/Gamaforce-Full-White.png";
-import { Link } from "react-router-dom";
 import { TbPlaneInflight } from "react-icons/tb";
-import data from "../data/dummydata.json";
-
-import MissionComp from "../components/MissionComp";
+import { AiTwotoneEdit } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const mapRef = useRef();
-  const initialPos = [-7.772297405953391, 110.37734234583341];
+  // const initialPos = [-7.772297405953391, 110.37734234583341];
+  const initialPos = [-7.971605, 110.276907];
+
+  const [row, setRow] = useState({});
 
   const onCreate = (e) => {
     const { layer } = e;
@@ -22,22 +24,25 @@ const HomePage = () => {
     console.log(coordinates);
   };
 
-  // const fetcher = async () => {
-  //   const response = await axios.get(`http://localhost:9000/api/mission`);
-  //   console.log(response.data[0].properties.name);
-  //   return response.data;
-  // };
+  const fetcher = async () => {
+    const response = await axios.get(`http://localhost:9000/api/mission`);
+    return response.data;
+  };
 
-  // const { data } = useSWR("", fetcher);
-  // if (!data) {
-  //   console.log("no data detect, waiting for data ....");
-  // }
+  const { data, error } = useSWR("http://localhost:9000/api/mission", fetcher);
 
-  // const deleteMission = async (missionId) => {
-  //   await axios.delete(`http://localhost:9000/api/mission/${missionId}`);
-  //   mutate("");
-  // };
+  const deleteMission = async (missionId) => {
+    await axios.delete(`http://localhost:9000/api/mission/${missionId}`);
+    mutate("mission");
+  };
 
+  if (!data) {
+    return <h1>Error ngab</h1>;
+  }
+
+  if (error) {
+    return <h1>Error ngab</h1>;
+  }
   return (
     <div className='flex flex-col md:grid md:grid-cols-4 row-span-1 h-screen'>
       {/* start title section */}
@@ -74,6 +79,13 @@ const HomePage = () => {
                   circlemarker: false,
                 }}
               />
+              {data.map((items) => {
+                return (
+                  <div key={items.id}>
+                    <GeoJSON data={items.data} />
+                  </div>
+                );
+              })}
             </FeatureGroup>
           </MapContainer>
         </div>
@@ -88,18 +100,35 @@ const HomePage = () => {
             className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
             Mission Side
           </div>
-          <button className='px-4 py-3 flex items-center space-x-2 border rounded-md w-[200px]'>
-            <TbPlaneInflight />
-            <span className='font-semibold'>Tambah Misi</span>
-          </button>
-          <div className='flex flex-col items-center justify-center'>
-            {data.map((misi) => {
-              return (
-                <div key={misi.id}>
-                  <MissionComp name={misi.properties.name} />
-                </div>
-              );
-            })}
+          <div className='w-full flex items-center justify-center py-5'>
+            <Link
+              to={"/add"}
+              className='px-4 py-3 flex items-center space-x-2 border rounded-md w-[200px]'>
+              <TbPlaneInflight />
+              <span className='font-semibold'>Tambah Misi</span>
+            </Link>
+          </div>
+          <div className='overflow-y-scroll'>
+            <div className='flex flex-col items-center justify-center pr-5'>
+              {data.map((items) => {
+                return (
+                  <Link
+                    to={"./edit"}
+                    className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
+                    key={items.id}>
+                    <p>{items.data.properties.name}</p>
+                    <div className='flex items-center space-x-5'>
+                      <button>
+                        <AiTwotoneEdit />
+                      </button>
+                      <button onClick={() => deleteMission(Number(items.id))}>
+                        <MdDeleteOutline />
+                      </button>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
