@@ -9,9 +9,9 @@ const App = () => {
     <div className='bg-[#000011] text-white overflow-auto max-h-screen max-w-screen'>
       <BrowserRouter>
         <Routes>
-          <Route path="/" Component={HomePage} />
-          <Route path="/add" Component={AddPage} />
-          <Route path="/edit/:id" Component={MissionPage} />
+          <Route path='/' Component={HomePage} />
+          <Route path='/add' Component={AddPage} />
+          <Route path='/edit' Component={MissionPage} />
         </Routes>
       </BrowserRouter>
     </div>

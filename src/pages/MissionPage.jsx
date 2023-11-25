@@ -5,13 +5,8 @@ import { TileLayer, FeatureGroup, MapContainer, GeoJSON } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
-import GamaForceLogo from "../assets/logo/Gamaforce-Full-White.png";
-import { TbPlaneInflight } from "react-icons/tb";
-import { AiTwotoneEdit } from "react-icons/ai";
-import { MdDeleteOutline } from "react-icons/md";
-import { Link } from "react-router-dom";
 
-const HomePage = () => {
+const MissionPage = () => {
   const mapRef = useRef();
   // const initialPos = [-7.772297405953391, 110.37734234583341];
   const initialPos = [-7.971605, 110.276907];
@@ -29,12 +24,7 @@ const HomePage = () => {
     return response.data;
   };
 
-  const { data, error } = useSWR("http://localhost:9000/api/mission", fetcher);
-
-  const deleteMission = async (missionId) => {
-    await axios.delete(`http://localhost:9000/api/mission/${missionId}`);
-    mutate("mission");
-  };
+  const { data, error } = useSWR(`http://localhost:9000/api/mission`, fetcher);
 
   if (!data) {
     return <h1>Error ngab</h1>;
@@ -44,21 +34,33 @@ const HomePage = () => {
     return <h1>Error ngab</h1>;
   }
   return (
-    <div className='flex flex-col md:grid md:grid-cols-4 row-span-1 h-screen'>
-      {/* start title section */}
-      <div className='flex items-center justify-center md:justify-center p-5'>
-        <div className='flex items-center justify-center px-3 md:w-fit'>
-          <img
-            src={GamaForceLogo}
-            alt='GamaForce Logo'
-            className='w-[60%] md:w-[90%]'
-          />
-        </div>
-      </div>
-      {/* end title section */}
+    <div className='flex flex-col md:grid md:grid-cols-4 h-screen'>
+      {/* start mission event section */}
+      <section className='flex items-center justify-center h-full py-5'>
+        <form className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
+          <div
+            to={"/"}
+            className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
+            Add the New Data
+          </div>
+          <div className='w-full flex items-center justify-center py-5'>
+            <input
+              type='text'
+              className='px-2 py-3 w-full rounded-md text-black'
+              placeholder='Input Mission Name'
+            />
+          </div>
+          <div className='flex flex-col items-center justify-center w-full hover:translate-y-[-1px]'>
+            <button className='px-2 py-3 w-full rounded-md bg-yellow-300 font-semibold'>
+              Update
+            </button>
+          </div>
+        </form>
+      </section>
+      {/* end mission event section */}
 
       {/* start map section */}
-      <div className='flex items-center justify-center p-5 md:col-span-3 md:row-span-2 overflow-hidden'>
+      <div className='flex items-center justify-center p-5 col-span-3 overflow-hidden'>
         <div className='h-full w-full rounded-lg overflow-hidden border-[5px] bg-white'>
           <MapContainer
             center={initialPos}
@@ -79,55 +81,14 @@ const HomePage = () => {
                   circlemarker: false,
                 }}
               />
-              {data.map((items) => {
-                return (
-                  <div key={items.id}>
-                    <GeoJSON data={items.data} />
-                  </div>
-                );
-              })}
+              <GeoJSON data={data} />
             </FeatureGroup>
           </MapContainer>
         </div>
       </div>
       {/* end map section */}
-
-      {/* start mission event section */}
-      <section className='flex items-center justify-center md:h-[400px]'>
-        <div className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
-          <div className='w-full flex items-center justify-center py-5'>
-            <div
-              to={"./add"}
-              className='px-4 py-3 flex justify-items-center space-x-2 border rounded-md w-[200px]'>
-              <TbPlaneInflight />
-              <span className='font-semibold text-center'>EDIT</span>
-            </div>
-          </div>
-          <div>
-            <div className='flex flex-col items-center justify-center pr-5'>
-              {data.map((items) => {
-                const id = 4;
-                return (
-                  <>
-                  <div
-                  className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
-                  key={items.id}>
-                    <p>{items.data.properties.name}</p>
-                  </div>
-                  <div className='flex text-center items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-20 hover:translate-y-[-1px]'>
-                    <p>SAVE</p>
-                  </div>
-                  </>
-                );
-              })}
-
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* end mission event section */}
     </div>
   );
 };
 
-export default HomePage;
+export default MissionPage;
