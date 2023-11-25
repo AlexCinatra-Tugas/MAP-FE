@@ -37,7 +37,7 @@ const HomePage = () => {
   };
 
   if (!data) {
-    return <h1>Loading ...</h1>;
+    return <h1>Error ngab</h1>;
   }
 
   if (error) {
@@ -100,9 +100,9 @@ const HomePage = () => {
             className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
             Mission Side
           </div>
-          <div className='w-full flex items-center justify-center py-5 cursor-pointer'>
+          <div className='w-full flex items-center justify-center py-5'>
             <Link
-              to={"/edit"}
+              to={"./add"}
               className='px-4 py-3 flex items-center space-x-2 border rounded-md w-[200px]'>
               <TbPlaneInflight />
               <span className='font-semibold'>Tambah Misi</span>
@@ -112,19 +112,20 @@ const HomePage = () => {
             <div className='flex flex-col items-center justify-center pr-5'>
               {data.map((items) => {
                 return (
-                  <div
+                  <Link
+                    to={`./edit/${items.id}`}
                     className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
                     key={items.id}>
                     <p>{items.data.properties.name}</p>
                     <div className='flex items-center space-x-5'>
-                      <Link to={"/edit"}>
+                      <button>
                         <AiTwotoneEdit />
-                      </Link>
+                      </button>
                       <button onClick={() => deleteMission(Number(items.id))}>
                         <MdDeleteOutline />
                       </button>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
