@@ -19,6 +19,7 @@ const AddPage = () => {
     const { layer } = e;
     const newData = layer.toGeoJSON();
     setData(newData);
+    console.log(data);
   };
 
   const saveProduct = async (e) => {
@@ -43,7 +44,7 @@ const AddPage = () => {
           <div className='w-full flex items-center justify-center py-5'>
             <input
               type='text'
-              className='px-2 py-3 w-full rounded-md text-black text-center'
+              className='px-2 py-3 w-full rounded-md text-black placeholder:text-center pl-2'
               placeholder='Input Mission Name'
               value={name}
               onChange={(e) => {
