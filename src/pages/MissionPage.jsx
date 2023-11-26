@@ -20,11 +20,11 @@ const MissionPage = () => {
   };
 
   const fetcher = async () => {
-    const response = await axios.get(`http://localhost:9000/api/mission`);
+    const response = await axios.get(`http://localhost:9000/api/mission?id=4`);
     return response.data;
   };
 
-  const { data, error } = useSWR(`http://localhost:9000/api/mission`, fetcher);
+  const { data, error } = useSWR(`http://localhost:9000/api/mission?id=4`, fetcher);
 
   if (!data) {
     return <h1>Error ngab</h1>;
@@ -39,6 +39,7 @@ const MissionPage = () => {
       <section className='flex items-center justify-center h-full py-5'>
         <form className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
           <div
+            to={"/"}
             className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
             Update Mission
           </div>
