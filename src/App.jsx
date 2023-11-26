@@ -11,7 +11,7 @@ const App = () => {
         <Routes>
           <Route path='/' Component={HomePage} />
           <Route path='/add' Component={AddPage} />
-          <Route path='/edit/:id' Component={MissionPage} />
+          <Route path='/:id' Component={MissionPage} />
         </Routes>
       </BrowserRouter>
     </div>
