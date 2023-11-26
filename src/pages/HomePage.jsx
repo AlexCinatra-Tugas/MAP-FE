@@ -70,15 +70,18 @@ const HomePage = () => {
               url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
             <FeatureGroup>
-              <EditControl
+              {/* <EditControl
                 position='topright'
                 onCreated={_oncreate}
                 draw={{
+                  polygon: false,
+                  polyline: false,
+                  marker: false,
                   rectangle: false,
                   circle: false,
                   circlemarker: false,
                 }}
-              />
+              /> */}
               {data.map((items) => {
                 return (
                   <div key={items.id}>

@@ -75,15 +75,7 @@ const AddPage = () => {
               url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
             <FeatureGroup>
-              <EditControl
-                position='topright'
-                onCreated={onCreate}
-                draw={{
-                  rectangle: false,
-                  circle: false,
-                  circlemarker: false,
-                }}
-              />
+              <EditControl position='topright' onCreated={onCreate} draw={{}} />
             </FeatureGroup>
           </MapContainer>
         </div>

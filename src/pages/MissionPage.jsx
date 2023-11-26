@@ -1,16 +1,16 @@
 import axios from "axios";
-import useSWR, { mutate, useSWRConfig } from "swr";
 import React, { useRef, useState, useEffect } from "react";
 import { TileLayer, FeatureGroup, MapContainer, GeoJSON } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const MissionPage = () => {
   const mapRef = useRef();
   // const initialPos = [-7.971605, 110.276907];
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [data, setData] = useState(null);
@@ -23,9 +23,9 @@ const MissionPage = () => {
       );
       setName(response.data.name);
       setData(response.data.data);
-      const lat = parseFloat(response.data.data.geometry.coordinates[0][0]);
-      const long = parseFloat(response.data.data.geometry.coordinates[0][1]);
-      const pos = [long, lat];
+      const lat = parseFloat(response.data.data.geometry.coordinates[0][1]);
+      const long = parseFloat(response.data.data.geometry.coordinates[0][0]);
+      const pos = [lat, long];
       setCenter(pos);
     };
     getMissionById();
@@ -33,22 +33,18 @@ const MissionPage = () => {
 
   const _oncreate = (e) => {
     const { layer } = e;
-    const coordinates = layer.toGeoJSON().geometry.coordinates;
-    console.log(coordinates);
+    const newData = layer.toGeoJSON();
+    setData(newData);
   };
 
-  const _onedit = (e) => {
-    const { layers } = e;
-    const coordinates = [];
-
-    layers.eachLayer((layer) => {
-      // Use layer.toGeoJSON().geometry.coordinates for each layer
-      const layerCoordinates = layer.toGeoJSON().geometry.coordinates;
-      coordinates.push(layerCoordinates);
-    });
-
-    console.log(coordinates);
-  };
+  // const _onedit = (e) => {
+  //   const drawnItems = leaflet.layerContainer;
+  //   const layers = drawnItems.getLayers();
+  //   const coordinates = layers.map(
+  //     (layer) => layer.toGeoJSON().geometry.coordinates
+  //   );
+  //   console.log(coordinates);
+  // };
 
   const updateMission = async (e) => {
     e.preventDefault();
@@ -92,6 +88,7 @@ const MissionPage = () => {
         </form>
       </section>
       {/* end mission event section */}
+
       {/* start map section */}
       <div className='flex items-center justify-center p-5 col-span-3 overflow-hidden'>
         <div className='h-full w-full rounded-lg overflow-hidden border-[5px] bg-white'>
@@ -104,27 +101,17 @@ const MissionPage = () => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
-            {data && (
-              <FeatureGroup>
-                <EditControl
-                  position='topright'
-                  onCreated={_oncreate}
-                  onEdited={_onedit}
-                  draw={{
-                    marker: false,
-                    // polygon: false,
-                    polyline: false,
-                    rectangle: false,
-                    circle: false,
-                    circlemarker: false,
-                  }}
-                />
-                <GeoJSON data={data} />
-              </FeatureGroup>
-            )}
+            <FeatureGroup>
+              <EditControl
+                position='topright'
+                onCreated={_oncreate}
+                // onEdited={_onedit}
+                draw={{}}
+              />
+            </FeatureGroup>
           </MapContainer>
         </div>
-      </div>{" "}
+      </div>
       {/* end map section */}
     </div>
   );
