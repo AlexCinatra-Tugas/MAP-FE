@@ -93,9 +93,7 @@ const HomePage = () => {
       {/* start mission event section */}
       <section className='flex items-center justify-center md:h-[400px]'>
         <div className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
-          <div
-            to={"/"}
-            className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
+          <div className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
             Mission Side
           </div>
           <div className='w-full flex items-center justify-center py-5'>
@@ -111,7 +109,7 @@ const HomePage = () => {
               {data.map((items) => {
                 return (
                   <Link
-                    to={`./edit/${id}`}
+                    to={`./edit/${items.id}`}
                     className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
                     key={items.id}>
                     <p>{items.name}</p>
