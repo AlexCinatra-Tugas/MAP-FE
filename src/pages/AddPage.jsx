@@ -5,58 +5,56 @@ import { TileLayer, FeatureGroup, MapContainer, GeoJSON } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
+import { useNavigate } from "react-router-dom";
 
 const AddPage = () => {
   const mapRef = useRef();
-  // const initialPos = [-7.772297405953391, 110.37734234583341];
   const initialPos = [-7.971605, 110.276907];
 
-  const [row, setRow] = useState({});
+  const [data, setData] = useState({});
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
 
   const onCreate = (e) => {
     const { layer } = e;
-    const coordinates = layer.toGeoJSON();
-    console.log(coordinates);
+    const newData = layer.toGeoJSON();
+    setData(newData);
   };
 
-  const fetcher = async () => {
-    const response = await axios.get(`http://localhost:9000/api/mission`);
-    return response.data;
+  const saveProduct = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:9000/api/mission", {
+      name: name,
+      data: data,
+    });
+    navigate("/");
   };
 
-  const { data, error } = useSWR("http://localhost:9000/api/mission", fetcher);
-
-  const deleteMission = async (missionId) => {
-    await axios.delete(`http://localhost:9000/api/mission/${missionId}`);
-    mutate("mission");
-  };
-
-  if (!data) {
-    return <h1>Error ngab</h1>;
-  }
-
-  if (error) {
-    return <h1>Error ngab</h1>;
-  }
   return (
-    <div className='flex flex-col md:grid md:grid-cols-4 h-screen'>
+    <div className='flex flex-col md:grid md:grid-cols-4 h-screen overflow-auto'>
       {/* start mission event section */}
-      <section className='flex items-center justify-center h-full py-5'>
+      <section
+        className='flex items-center justify-center h-full py-5'
+        onSubmit={saveProduct}>
         <form className='flex flex-col items-center justify-start space-y-3 px-5 h-full w-full pt-5'>
-          <div
-            to={"/"}
-            className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
+          <div className='text-xl text-center font-semibold md:flex md:items-center md:justify-center md:space-x-2'>
             Add the New Data
           </div>
           <div className='w-full flex items-center justify-center py-5'>
             <input
               type='text'
-              className='px-2 py-3 w-full rounded-md text-black'
+              className='px-2 py-3 w-full rounded-md text-black text-center'
               placeholder='Input Mission Name'
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
             />
           </div>
           <div className='flex flex-col items-center justify-center w-full hover:translate-y-[-1px]'>
-            <button className='px-2 py-3 w-full rounded-md bg-green-600'>
+            <button
+              type='submit'
+              className='px-2 py-3 w-full rounded-md bg-green-600'>
               Submit
             </button>
           </div>

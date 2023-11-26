@@ -13,10 +13,8 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const mapRef = useRef();
-  // const initialPos = [-7.772297405953391, 110.37734234583341];
+  const { mutate } = useSWRConfig();
   const initialPos = [-7.971605, 110.276907];
-
-  const [row, setRow] = useState({});
 
   const onCreate = (e) => {
     const { layer } = e;
@@ -73,7 +71,11 @@ const HomePage = () => {
               <EditControl
                 position='topright'
                 onCreated={onCreate}
-                
+                draw={{
+                  rectangle: false,
+                  circle: false,
+                  circlemarker: false,
+                }}
               />
               {data.map((items) => {
                 return (
@@ -108,20 +110,20 @@ const HomePage = () => {
             <div className='flex flex-col items-center justify-center pr-5'>
               {data.map((items) => {
                 return (
-                  <div
-                  className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
-                  key={items.id}>
-                    <p>{items.data.properties.name}</p>
+                  <Link
+                    to={`./edit/${id}`}
+                    className='flex items-center justify-between px-3 py-2 border w-[200px] rounded-md cursor-pointer my-2 hover:translate-y-[-1px]'
+                    key={items.id}>
+                    <p>{items.name}</p>
                     <div className='flex items-center space-x-5'>
-                      <Link
-                      to={`./edit/${items.id}`}>
+                      <button>
                         <AiTwotoneEdit />
-                      </Link>
+                      </button>
                       <button onClick={() => deleteMission(Number(items.id))}>
                         <MdDeleteOutline />
                       </button>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
