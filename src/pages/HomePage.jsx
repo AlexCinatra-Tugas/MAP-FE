@@ -16,8 +16,9 @@ const HomePage = () => {
   const { mutate } = useSWRConfig();
   const initialPos = [-7.971605, 110.276907];
 
-  const onCreate = (e) => {
+  const _oncreate = (e) => {
     const { layer } = e;
+    // console.log(layer);
     const coordinates = layer.toGeoJSON();
     console.log(coordinates);
   };
@@ -71,7 +72,7 @@ const HomePage = () => {
             <FeatureGroup>
               <EditControl
                 position='topright'
-                onCreated={onCreate}
+                onCreated={_oncreate}
                 draw={{
                   rectangle: false,
                   circle: false,
@@ -99,7 +100,7 @@ const HomePage = () => {
           </div>
           <div className='w-full flex items-center justify-center py-5'>
             <Link
-              to={"./add"}
+              to={"/add"}
               className='px-4 py-3 flex items-center space-x-2 border rounded-md w-[200px]'>
               <TbPlaneInflight />
               <span className='font-semibold'>Tambah Misi</span>
@@ -114,7 +115,7 @@ const HomePage = () => {
                     key={items.id}>
                     <p>{items.name}</p>
                     <div className='flex items-center space-x-5'>
-                      <Link to={`./edit/${items.id}`}>
+                      <Link to={`/edit/${items.id}`}>
                         <AiTwotoneEdit />
                       </Link>
                       <button onClick={() => deleteMission(Number(items.id))}>

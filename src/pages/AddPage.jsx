@@ -19,7 +19,6 @@ const AddPage = () => {
     const { layer } = e;
     const newData = layer.toGeoJSON();
     setData(newData);
-    console.log(data);
   };
 
   const saveProduct = async (e) => {

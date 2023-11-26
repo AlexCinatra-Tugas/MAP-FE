@@ -23,9 +23,9 @@ const MissionPage = () => {
       );
       setName(response.data.name);
       setData(response.data.data);
-      const lat = parseFloat(response.data.data.geometry.coordinates[0][0]);
-      const long = parseFloat(response.data.data.geometry.coordinates[0][1]);
-      const pos = [long, lat];
+      const lat = parseFloat(response.data.data.geometry.coordinates[0][1]);
+      const long = parseFloat(response.data.data.geometry.coordinates[0][0]);
+      const pos = [lat, long];
       setCenter(pos);
     };
     getMissionById();
@@ -33,20 +33,12 @@ const MissionPage = () => {
 
   const _oncreate = (e) => {
     const { layer } = e;
-    const coordinates = layer.toGeoJSON().geometry.coordinates;
-    console.log(coordinates);
+    const coordinates = layer.toGeoJSON();
   };
 
   const _onedit = (e) => {
-    const { layers } = e;
-    const coordinates = [];
-
-    layers.eachLayer((layer) => {
-      // Use layer.toGeoJSON().geometry.coordinates for each layer
-      const layerCoordinates = layer.toGeoJSON().geometry.coordinates;
-      coordinates.push(layerCoordinates);
-    });
-
+    const { layer } = e;
+    const coordinates = layer.toGeoJSON();
     console.log(coordinates);
   };
 
@@ -92,6 +84,7 @@ const MissionPage = () => {
         </form>
       </section>
       {/* end mission event section */}
+
       {/* start map section */}
       <div className='flex items-center justify-center p-5 col-span-3 overflow-hidden'>
         <div className='h-full w-full rounded-lg overflow-hidden border-[5px] bg-white'>
@@ -112,7 +105,7 @@ const MissionPage = () => {
                   onEdited={_onedit}
                   draw={{
                     marker: false,
-                    // polygon: false,
+                    polygon: false,
                     polyline: false,
                     rectangle: false,
                     circle: false,
@@ -124,7 +117,7 @@ const MissionPage = () => {
             )}
           </MapContainer>
         </div>
-      </div>{" "}
+      </div>
       {/* end map section */}
     </div>
   );
